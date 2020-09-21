@@ -1,0 +1,21 @@
+[
+  "api/test_main.py::test_read_main_returns_not_found",
+  "api/test_main.py::test_get_task_query_fail",
+  "api/test_main.py::test_get_test_query_false",
+  "api/test_main.py::test_get_test_query_true",
+  "api/test_main.py::test_get_all_tasks_empty",
+  "api/test_main.py::test_get_all_tasks",
+  "api/test_main.py::test_create_and_get_task",
+  "api/test_main.py::test_get_task_fail_not_uuid",
+  "api/test_main.py::test_get_task_fail_uuid_doesnt_exist",
+  "api/test_main.py::test_post_fail",
+  "api/test_main.py::test_create_and_put_task",
+  "api/test_main.py::test_put_fail",
+  "api/test_main.py::test_put_not_uuid",
+  "api/test_main.py::test_create_and_patch_task",
+  "api/test_main.py::test_patch_fail",
+  "api/test_main.py::test_patch_not_uuid",
+  "api/test_main.py::test_patch_non_existing_uuid",
+  "api/test_main.py::test_delete_not_uuid",
+  "api/test_main.py::test_delete_non_existing_uuid"
+]
