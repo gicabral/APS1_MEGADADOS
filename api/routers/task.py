@@ -18,11 +18,10 @@ router = APIRouter()
 )
 async def read_tasks(completed: bool = None, db: DBSession = Depends(get_db)):
     if completed is None:
-        return db.tasks
-    return {
-        uuid_: item
-        for uuid_, item in db.tasks.items() if item.completed == completed
-    }
+        return db.read_tasks()
+    else:
+        return db.read_tasks(completed) 
+
 
 
 @router.post(
@@ -32,9 +31,7 @@ async def read_tasks(completed: bool = None, db: DBSession = Depends(get_db)):
     response_model=uuid.UUID,
 )
 async def create_task(item: Task, db: DBSession = Depends(get_db)):
-    uuid_ = uuid.uuid4()
-    db.tasks[uuid_] = item
-    return uuid_
+    return db.create_task(item)
 
 
 @router.get(
@@ -45,7 +42,7 @@ async def create_task(item: Task, db: DBSession = Depends(get_db)):
 )
 async def read_task(uuid_: uuid.UUID, db: DBSession = Depends(get_db)):
     try:
-        return db.tasks[uuid_]
+        return db.read_task(uuid_)
     except KeyError as exception:
         raise HTTPException(
             status_code=404,
@@ -61,7 +58,7 @@ async def read_task(uuid_: uuid.UUID, db: DBSession = Depends(get_db)):
 async def replace_task(uuid_: uuid.UUID, item: Task, db: DBSession = Depends(get_db)):
     try:
         if uuid_ in db.tasks:
-            db.tasks[uuid_] = item
+            db.replace_task(uuid_, item)
         else:
             raise KeyError()
     except KeyError as exception:
@@ -77,8 +74,7 @@ async def replace_task(uuid_: uuid.UUID, item: Task, db: DBSession = Depends(get
 )
 async def alter_task(uuid_: uuid.UUID, item: Task, db: DBSession = Depends(get_db)):
     try:
-        update_data = item.dict(exclude_unset=True)
-        db.tasks[uuid_] = db.tasks[uuid_].copy(update=update_data)
+        db.alter_task(uuid_, item)
     except KeyError as exception:
         raise HTTPException(
             status_code=404,
@@ -93,7 +89,7 @@ async def alter_task(uuid_: uuid.UUID, item: Task, db: DBSession = Depends(get_d
 )
 async def remove_task(uuid_: uuid.UUID, db: DBSession = Depends(get_db)):
     try:
-        del db.tasks[uuid_]
+        db.remove_task(uuid_)
     except KeyError as exception:
         raise HTTPException(
             status_code=404,
