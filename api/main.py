@@ -4,8 +4,6 @@ from fastapi import FastAPI
 
 from .routers import task
 
-
-
 tags_metadata = [
     {
         'name': 'task',

@@ -40,6 +40,10 @@ def test_get_test_query_false():
     assert response5.status_code == 200
     assert response5.json() == None
 
+    response6 = client.get('/task')
+    assert response6.status_code == 200
+    assert response6.json() == {}
+
 #checks if a get request with an valid query value, true, returns only the tasks which the completed field is "True"
 def test_get_test_query_true():
     response = client.post(
@@ -62,6 +66,10 @@ def test_get_test_query_true():
     response5 = client.delete(f"/task/{response2.json()}")
     assert response5.status_code == 200
     assert response5.json() == None
+
+    response6 = client.get('/task')
+    assert response6.status_code == 200
+    assert response6.json() == {}
 
 #checks if a get request when there are no tasks, returns an empty dictionary
 def test_get_all_tasks_empty():
@@ -92,6 +100,10 @@ def test_get_all_tasks():
     assert response5.status_code == 200
     assert response5.json() == None
 
+    response6 = client.get('/task')
+    assert response6.status_code == 200
+    assert response6.json() == {}
+
 #checks if a get request using the uuid of the created task as a path parameter, returns the task in question. 
 #also tests the delete and the post methods.
 def test_create_and_get_task():
@@ -108,6 +120,10 @@ def test_create_and_get_task():
     response3 = client.delete(f"/task/{response.json()}")
     assert response3.status_code == 200
     assert response3.json() == None
+
+    response4 = client.get('/task')
+    assert response4.status_code == 200
+    assert response4.json() == {}
 
 #checks if a get request using a string as a path parameter, 
 #returns a 422 code and a message complaining that the parameter isn't a valid uuid. 
@@ -151,6 +167,10 @@ def test_create_and_put_task():
     assert response3.status_code == 200
     assert response3.json() == None
 
+    response4 = client.get('/task')
+    assert response4.status_code == 200
+    assert response4.json() == {}
+
 #checks if a put request with no body returns a 405 code and a message complaining about a not allowed method.
 def test_put_fail():
     response = client.put(
@@ -173,14 +193,14 @@ def test_put_not_uuid():
 #checks if a put request using a non existent uuid as a path parameter, 
 #returns a 404 code and a message complaining that the task wasn't found. 
 #isn't working, when the request is made, it creates a new task
-# def test_put_non_existing_uuid():
-#     uuid_ = uuid.uuid4()
-#     response = client.put(
-#         f"/task/{uuid_}",
-#         json = {"description": "cria diferente", "completed": True}
-#     )
-#     assert response.status_code == 404
-#     assert response.json() == {'detail': 'task not found'}
+def test_put_non_existing_uuid():
+    uuid_ = uuid.uuid4()
+    response = client.put(
+        f"/task/{uuid_}",
+        json = {"description": "cria diferente", "completed": True}
+    )
+    assert response.status_code == 404
+    assert response.json() == {'detail': 'Task not found'}
 
 #checks if a patch request returns a 200 code
 def test_create_and_patch_task():
@@ -200,6 +220,10 @@ def test_create_and_patch_task():
     response3 = client.delete(f"/task/{response.json()}")
     assert response3.status_code == 200
     assert response3.json() == None
+
+    response4 = client.get('/task')
+    assert response4.status_code == 200
+    assert response4.json() == {}
 
 #checks if a patch request with no body returns a 405 code and a message complaining about a not allowed method.
 def test_patch_fail():

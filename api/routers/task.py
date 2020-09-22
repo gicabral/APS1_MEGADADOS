@@ -60,13 +60,15 @@ async def read_task(uuid_: uuid.UUID, db: DBSession = Depends(get_db)):
 )
 async def replace_task(uuid_: uuid.UUID, item: Task, db: DBSession = Depends(get_db)):
     try:
-        db.tasks[uuid_] = item
+        if uuid_ in db.tasks:
+            db.tasks[uuid_] = item
+        else:
+            raise KeyError()
     except KeyError as exception:
         raise HTTPException(
             status_code=404,
             detail='Task not found',
         ) from exception
-
 
 @router.patch(
     '/{uuid_}',
