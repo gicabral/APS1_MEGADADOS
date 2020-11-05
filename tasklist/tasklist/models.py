@@ -1,8 +1,7 @@
 # pylint: disable=missing-module-docstring,missing-class-docstring
 from typing import Optional
-
 from pydantic import BaseModel, Field  # pylint: disable=no-name-in-module
-
+import uuid
 
 # pylint: disable=too-few-public-methods
 class Task(BaseModel):
@@ -15,10 +14,8 @@ class Task(BaseModel):
         False,
         title='Shows whether the task was completed',
     )
-    username: Optional[str] = Field(
-        'no username',
-        title='Name of the user in charge of the task',
-        max_length=1024,
+    user_uuid: uuid.UUID = Field(
+        title="UUID of the user in charge of the task",
     )
 
     class Config:
@@ -26,7 +23,7 @@ class Task(BaseModel):
             'example': {
                 'description': 'Buy baby diapers',
                 'completed': False,
-                'username': 'giovanna',
+                'user_uuid': '3668e9c9-df18-4ce2-9bb2-82f907cf110c',
             }
         }
 
