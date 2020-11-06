@@ -179,7 +179,7 @@ def test_alter_task():
     user_uuid2 = response.json()
 
     # Create a task.
-    task = {'description': 'foo', 'completed': False, "user_uuid": user_uuid}}
+    task = {'description': 'foo', 'completed': False, "user_uuid": user_uuid}
     response = client.post('/task', json=task)
     assert response.status_code == 200
     uuid_ = response.json()
@@ -394,7 +394,7 @@ def test_delete_all_users():
     setup_database()
 
     # Create a user.
-    task = {'name': 'giovanna'}
+    user = {'name': 'giovanna'}
     response = client.post('/user', json=user)
     assert response.status_code == 200
     uuid_ = response.json()

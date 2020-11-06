@@ -45,7 +45,7 @@ class DBSession:
         with self.connection.cursor() as cursor:
             cursor.execute(
                 'INSERT INTO tasks VALUES (UUID_TO_BIN(%s), %s, %s, UUID_TO_BIN(%s))',
-                (str(uuid_), item.description, item.completed, item.user_uuid),
+                (str(uuid_), item.description, item.completed, str(item.user_uuid)),
             )
         self.connection.commit()
 
